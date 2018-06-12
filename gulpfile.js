@@ -6,7 +6,7 @@ var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
 var babel = require('gulp-babel');
 var cssnano = require('gulp-cssnano');
-// var browserify = require("browserify");
+var rename = require('gulp-rename');
 
 gulp.task('pozovi', function() {
     console.log('di si sokre');
@@ -49,16 +49,17 @@ gulp.task('browserSync', function() {
       .pipe(gulp.dest('distribution'))
   });
   gulp.task('minifyjs', () => {
-    return gulp.src('production/js/*.js')
+    return gulp.src('production/js/index.js')
     .pipe(babel({
         presets: ['es2015']
     }))
     .pipe(uglify())
-    .pipe(gulp.dest('dist/js'))
+    .pipe(rename('index.min.js'))
+    .pipe(gulp.dest('distribution/js'))
 });
 gulp.task('minifycss', () =>{
     return gulp.src('production/css/style.css')
         .pipe(cssnano())
         .pipe(rename('style.min.css'))
-        .pipe(gulp.dest('dist/css'))
+        .pipe(gulp.dest('distribution/css'))
   });
